@@ -1,19 +1,153 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title>My Private Notes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-  </head>
-  <body>
-    <div id="app"></div>
-    <script>
-      window.$docsify = {
-        name: 'My Repo',
-        repo: ''
-      }
-    </script>
-    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  </body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIRAI Research Group</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --text: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        nav a:hover { color: var(--accent); }
+
+        /* Banner */
+        .banner {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), 
+                        url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .banner h1 { font-size: 3.5rem; margin: 0; letter-spacing: 4px; }
+        .banner p { font-size: 1.2rem; opacity: 0.9; }
+
+        /* Section Handling */
+        section {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: none; /* Hidden by default */
+        }
+
+        section.active { display: block; }
+
+        /* Content Styles */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #fff; }
+        h2 { border-bottom: 2px solid var(--accent); padding-bottom: 10px; color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('events')">Events</a>
+        <a onclick="showPage('publications')">Publications</a>
+        <a onclick="showPage('members')">Members</a>
+    </nav>
+</header>
+
+<div class="banner">
+    <h1>MIRAI</h1>
+    <p>Researching the Future of Innovation & Intelligence</p>
+</div>
+
+<section id="home" class="active">
+    <h2>Welcome to MIRAI</h2>
+    <p>Mirai (未来) means "Future." Our research group is dedicated to exploring the intersection of technology, society, and advanced engineering.</p>
+    <p>We focus on sustainable solutions for the next generation of global challenges.</p>
+</section>
+
+<section id="events">
+    <h2>Upcoming Events</h2>
+    <div class="card">
+        <h3>Annual Symposium 2026</h3>
+        <p><strong>Date:</strong> Oct 12, 2026</p>
+        <p>Join us for a day of talks regarding AI ethics and future robotics.</p>
+    </div>
+</section>
+
+<section id="publications">
+    <h2>Recent Publications</h2>
+    <ul>
+        <li>"Neural Pathways in Future Architectures" - <em>Journal of Tech, 2025</em></li>
+        <li>"Sustainability in Urban Environments" - <em>MIRAI Press, 2026</em></li>
+    </ul>
+</section>
+
+<section id="members">
+    <h2>Our Team</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Dr. Akira Sato</h3>
+            <p>Principal Investigator</p>
+        </div>
+        <div class="card">
+            <h3>Sarah Jenkins</h3>
+            <p>Senior Researcher</p>
+        </div>
+        <div class="card">
+            <h3>James Chen</h3>
+            <p>PhD Candidate</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    function showPage(pageId) {
+        // Hide all sections
+        const sections = document.querySelectorAll('section');
+        sections.forEach(sec => sec.classList.remove('active'));
+        
+        // Show the selected section
+        document.getElementById(pageId).classList.add('active');
+        
+        // Scroll to top of content
+        window.scrollTo({top: 400, behavior: 'smooth'});
+    }
+</script>
+
+</body>
 </html>
