@@ -4,97 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIRAI Research Group</title>
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #3498db;
-            --light: #ecf0f1;
-            --text: #333;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            line-height: 1.6;
-            color: var(--text);
-        }
-
-        /* Header & Navigation */
-        header {
-            background: var(--primary);
-            color: white;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-around;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        nav a:hover { color: var(--accent); }
-
-        /* Banner */
-        .banner {
-            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), 
-                        url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1500&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 100px 20px;
-        }
-
-        .banner h1 { font-size: 3.5rem; margin: 0; letter-spacing: 4px; }
-        .banner p { font-size: 1.2rem; opacity: 0.9; }
-
-        /* Section Handling */
-        section {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-            display: none; /* Hidden by default */
-        }
-
-        section.active { display: block; }
-
-        /* Content Styles */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .card { border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #fff; }
-        h2 { border-bottom: 2px solid var(--accent); padding-bottom: 10px; color: var(--primary); }
-
-        /* Button Styles */
-        .download-btn {
-        display: inline-block;
-        background-color: var(--accent);
-        color: white;
-        padding: 10px 20px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        margin-top: 10px;
-        transition: background 0.3s ease;
-        }
-
-        .download-btn:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -175,19 +85,7 @@
     </div>
 </section>
 
-<script>
-    function showPage(pageId) {
-        // Hide all sections
-        const sections = document.querySelectorAll('section');
-        sections.forEach(sec => sec.classList.remove('active'));
-        
-        // Show the selected section
-        document.getElementById(pageId).classList.add('active');
-        
-        // Scroll to top of content
-        window.scrollTo({top: 400, behavior: 'smooth'});
-    }
-</script>
+<script src="js/main.js"></script>
 
 </body>
 </html>
