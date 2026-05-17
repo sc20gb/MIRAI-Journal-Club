@@ -3,89 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIRAI Research Group</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>MARAI Research Group</title>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main navigation">
+            <a class="brand" href="#home" data-page="home">
+                MIRAI Lab
+            </a>
 
-<header>
-    <nav>
-        <a onclick="showPage('home')">Home</a>
-        <a onclick="showPage('events')">Events</a>
-        <a onclick="showPage('publications')">Publications</a>
-        <a onclick="showPage('presentations')">Presentations</a>
-        <a onclick="showPage('members')">Members</a>
-    </nav>
-</header>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active" data-page="home" aria-current="page">Home</a>
+                <a href="#events" class="nav-link" data-page="events">Events</a>
+                <a href="#publications" class="nav-link" data-page="publications">Publications</a>
+                <a href="#presentations" class="nav-link" data-page="presentations">Presentations</a>
+                <a href="#members" class="nav-link" data-page="members">Members</a>
+            </div>
+        </nav>
+    </header>
 
-<div class="banner">
-    <h1>MIRAI</h1>
-</div>
+    <main>
+        <section id="home" class="page-section active" aria-labelledby="home-title">
+            <div class="hero" aria-label="Group photo area">
+                <!-- Replace this empty slot with a group photo later. -->
+                <div class="hero-photo-slot" aria-hidden="true"></div>
+            </div>
 
-<section id="home" class="active">
-<h2>
-    Example text that we can fill out on the home page
-</h2>
-</section>
+            <div class="intro-panel">
+                <div class="intro-copy">
+                    <h2 id="home-title">
+                        <span class="title-emphasis">M</span>edical
+                        <span class="title-emphasis">I</span>maging and Gene
+                        <span class="title-emphasis">R</span>ative
+                        <span class="title-emphasis">AI</span>
+                    </h2>
+                    <p>
+                        MARAI Lab is a research group at the University of Leeds working 
+                        at the intersection of medical imaging, computer vision,
+                        generative AI, vision-language models, and intelligent healthcare technologies. Our
+                        research aims to develop robust, interpretable, and clinically meaningful AI systems
+                        for medical image understanding, surgical video analysis, medical robotics, and
+                        computer-assisted healthcare.
+                    </p>
+                    <p>
+                        Our group brings together researchers working on surgical tool pose estimation,
+                        digital histopathology and molecular spectroscopy, virtual patients for medical
+                        training, surgical video understanding and anticipation, and medical vision-language models. 
+                        Through interdisciplinary collaboration, we seek to build
+                        AI methods that connect visual perception, multimodal reasoning, and real-world
+                        clinical needs.
+                    </p>
+                </div>
 
-<section id="events">
-    <h2>Upcoming Events</h2>
-    <div class="card">
-        <h3>Event 1</h3>
-        <p><strong>Date:</strong> Some time in the future</p>
-        <p>Example of an event</p>
-    </div>
-</section>
+                <img src="./images/MARAI_logo.png" alt="MARAI Lab logo" class="intro-logo">
+            </div>
 
-<section id="publications">
-    <h2>Recent Publications</h2>
-    <ul>
-        <li>"publication 1" - <em>example confrence, 2025</em></li>
-        <li>"publication 2" - <em>example confrence, 2026</em></li>
-    </ul>
-</section>
+            <div class="theme-row" aria-label="Research themes" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
+                <span>Computer Vision</span>
+                <span>Medical Imaging</span>
+                <span>Healthcare Intelligence</span>
+                <span>Medical Robotics</span>
+                <span>Generative AI</span>
+                <span>Vision-Language Models</span>
+            </div>
 
-<section id="presentations">
-    <h2>Research Presentations</h2>
-    <div class="grid">
-        
-        <div class="card">
-            <h3>p1</h3>
-            <p>info1</p>
-            <a href="files/f1.pdf" download class="download-btn">Download PDF</a>
-        </div>
+            <div class="news-panel" aria-labelledby="news-title">
+                <p class="section-kicker">Updates</p>
+                <h2 id="news-title">Latest News</h2>
+                <ol class="news-list">
+                    <li>
+                        <time datetime="2026-05">May 2026</time>
+                        <div>
+                            <h3>Gold Reviewer recognition at ICML 2026</h3>
+                            <p>Dr. Duygu Sarikaya was recognized as a Gold Reviewer for ICML 2026.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time datetime="2026-05">May 2026</time>
+                        <div>
+                            <h3>Area Chair service at MICCAI 2026</h3>
+                            <p>Dr. Duygu Sarikaya will serve as an Area Chair for MICCAI 2026.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time datetime="2026-02">Feb 2026</time>
+                        <div>
+                            <h3>Arpita’s clinical consultation paper accepted</h3>
+                            <p>Arpita’s paper, “AI-Simulated Clinical Consultations: Assessing the Potential of ChatGPT to Support Medical Training,” was accepted for publication in <em>Archives of Disease in Childhood</em>.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time datetime="2026-02">Feb 2026</time>
+                        <div>
+                            <h3>Lucy’s surgical tool pose estimation paper accepted</h3>
+                            <p>Lucy’s paper, “PICO: Projection-Informed Consistency Optimisation for 6DoF Surgical Tool Pose Estimation,” was accepted as a poster presentation at CARS 2026.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time datetime="2026-01">Jan 2026</time>
+                        <div>
+                            <h3>AE-CAI | CARE | OR 2.0 Joint MICCAI Workshop accepted</h3>
+                            <p>The AE-CAI | CARE | OR 2.0 Joint MICCAI Workshop was accepted and will mark the 20th anniversary edition of AE-CAI.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time datetime="2025-12">Dec 2025</time>
+                        <div>
+                            <h3>NeeCo published in Transactions on Medical Imaging</h3>
+                            <p>“NeeCo: Image Synthesis of Novel Instrument States Based on Dynamic and Deformable 3D Gaussian Reconstruction” was published in <em>IEEE Transactions on Medical Imaging</em>.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time datetime="2025-12">Dec 2025</time>
+                        <div>
+                            <h3>PRISM published in Healthcare Technology Letters</h3>
+                            <p>“PRISM: Past-Regularized Iterative Self-Distillation With Momentum for Polyp Segmentation” was published in <em>Healthcare Technology Letters</em>.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time datetime="2025-11">Nov 2025</time>
+                        <div>
+                            <h3>Xin Ci presented at ICONIP 2025</h3>
+                            <p>Xin Ci presented her paper, “Can Diffusion Models Bridge the Domain Gap in Cardiac MR Imaging?”, at ICONIP 2025 in Okinawa.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time datetime="2025-11">Nov 2025</time>
+                        <div>
+                            <h3>CRAS 2026 to be organized in Leeds</h3>
+                            <p>The group will be involved in organizing CRAS 2026 in Leeds.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time datetime="2025-11">Nov 2025</time>
+                        <div>
+                            <h3>IPCAI 2026 organizing team</h3>
+                            <p>Dr. Duygu Sarikaya joined the IPCAI 2026 organizing team, with the event scheduled to take place in Nagoya.</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </section>
 
-        <div class="card">
-            <h3>p2</h3>
-            <p>info2</p>
-            <a href="files/f2.pptx" download class="download-btn">Download PPTX</a>
-        </div>
+        <section id="events" class="page-section" aria-labelledby="events-title">
+            <h2 id="events-title">Upcoming Events</h2>
+            <div class="card">
+                <h3>Event 1</h3>
+                <p><strong>Date:</strong> Some time in the future</p>
+                <p>Example of an event</p>
+            </div>
+        </section>
 
-        <div class="card">
-            <h3>p3</h3>
-            <p>info3</p>
-            <a href="files/f3.pptx" download class="download-btn">Download ZIP</a>
-        </div>
+        <section id="publications" class="page-section" aria-labelledby="publications-title">
+            <h2 id="publications-title">Recent Publications</h2>
+            <ul class="content-list">
+                <li>"publication 1" - <em>example conference, 2025</em></li>
+                <li>"publication 2" - <em>example conference, 2026</em></li>
+            </ul>
+        </section>
 
-    </div>
-</section>
-<section id="members">
-    <h2>Our Team</h2>
-    <div class="grid">
-        <div class="card">
-            <h3>Name here</h3>
-            <p>Description here</p>
-        </div>
+        <section id="presentations" class="page-section" aria-labelledby="presentations-title">
+            <h2 id="presentations-title">Research Presentations</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>p1</h3>
+                    <p>info1</p>
+                    <a href="./files/f1.pdf" download class="download-btn">Download PDF</a>
+                </div>
 
-        <div class="card">
-            <h3>Name here</h3>
-            <p>Description here</p>
-        </div>
+                <div class="card">
+                    <h3>p2</h3>
+                    <p>info2</p>
+                    <a href="./files/f2.pptx" download class="download-btn">Download PPTX</a>
+                </div>
 
-    </div>
-</section>
+                <div class="card">
+                    <h3>p3</h3>
+                    <p>info3</p>
+                    <a href="./files/f3.pptx" download class="download-btn">Download ZIP</a>
+                </div>
+            </div>
+        </section>
 
-<script src="js/main.js"></script>
+        <section id="members" class="page-section" aria-labelledby="members-title">
+            <h2 id="members-title">Our Team</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Name here</h3>
+                    <p>Description here</p>
+                </div>
 
+                <div class="card">
+                    <h3>Name here</h3>
+                    <p>Description here</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>Copyright &copy; MARAI lab &nbsp; | &nbsp; University of Leeds</p>
+    </footer>
+
+    <script src="./js/main.js"></script>
 </body>
 </html>
