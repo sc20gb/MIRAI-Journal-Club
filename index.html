@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MARAI Research Group</title>
+    <title>MIRAI Lab</title>
+    <link rel="icon" type="image/png" href="./images/MIRAI_logo.png">
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
@@ -39,7 +40,7 @@
                         <span class="title-emphasis">AI</span>
                     </h2>
                     <p>
-                        MARAI Lab is a research group at the University of Leeds working 
+                        MIRAI Lab is a research group at the University of Leeds working 
                         at the intersection of medical imaging, computer vision,
                         generative AI, vision-language models, and intelligent healthcare technologies. Our
                         research aims to develop robust, interpretable, and clinically meaningful AI systems
@@ -56,7 +57,7 @@
                     </p>
                 </div>
 
-                <img src="./images/MARAI_logo.png" alt="MARAI Lab logo" class="intro-logo">
+                <img src="./images/MIRAI_logo.png" alt="MIRAI Lab logo" class="intro-logo">
             </div>
 
             <div class="theme-row" aria-label="Research themes" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
@@ -188,24 +189,27 @@
 
         <section id="members" class="page-section" aria-labelledby="members-title">
             <h2 id="members-title">Our Team</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Name here</h3>
-                    <p>Description here</p>
-                </div>
-
-                <div class="card">
-                    <h3>Name here</h3>
-                    <p>Description here</p>
-                </div>
-            </div>
+            <p class="members-intro">
+                Meet the researchers and students contributing to MIRAI Lab. Member profiles
+                can be expanded as real biographies, contact details, and research interests
+                become available.
+            </p>
+            <div id="member-sections" class="members-sections" aria-live="polite"></div>
         </section>
     </main>
 
+    <dialog id="member-dialog" class="member-dialog" aria-labelledby="member-dialog-title">
+        <div class="member-dialog-shell">
+            <button type="button" class="dialog-close" aria-label="Close member details">Close</button>
+            <div id="member-dialog-content" class="member-dialog-content"></div>
+        </div>
+    </dialog>
+
     <footer class="site-footer">
-        <p>Copyright &copy; MARAI lab &nbsp; | &nbsp; University of Leeds</p>
+        <p>Copyright &copy; MIRAI Lab &nbsp; | &nbsp; University of Leeds</p>
     </footer>
 
+    <script src="./js/memberData.js"></script>
     <script src="./js/main.js"></script>
 </body>
 </html>
