@@ -67,6 +67,9 @@ const contactFields = [
     },
 ];
 
+const publicationTypeOrder = ['Journal', 'Conference', 'Preprint', 'Workshop', 'Other'];
+let selectedPublicationYear = null;
+
 function getText(value, fallback = '') {
     return typeof value === 'string' && value.trim() ? value.trim() : fallback;
 }
@@ -115,6 +118,476 @@ function createTextElement(tagName, className, text) {
     element.className = className;
     element.textContent = text;
     return element;
+}
+
+function getPublications() {
+    return Array.isArray(window.MIRAI_PUBLICATIONS) ? window.MIRAI_PUBLICATIONS : [];
+}
+
+function getPublicationYears(publications) {
+    return [...new Set(
+        publications
+            .map((publication) => Number(publication.year))
+            .filter((year) => Number.isFinite(year))
+    )].sort((left, right) => right - left);
+}
+
+function getPublicationTypeGroup(type) {
+    const typeText = getText(type, 'Other');
+    return publicationTypeOrder.includes(typeText) ? typeText : 'Other';
+}
+
+function getPublicationTypeHeading(type) {
+    const headings = {
+        Journal: 'Journal Papers',
+        Conference: 'Conference Papers',
+        Preprint: 'Preprints',
+        Workshop: 'Workshop Papers',
+        Other: 'Other Publications',
+    };
+
+    return headings[type] || `${type} Publications`;
+}
+
+function groupPublicationsByYear(publications) {
+    return publications.reduce((groups, publication) => {
+        const year = Number(publication.year);
+
+        if (!Number.isFinite(year)) {
+            return groups;
+        }
+
+        if (!groups[year]) {
+            groups[year] = [];
+        }
+
+        groups[year].push(publication);
+        return groups;
+    }, {});
+}
+
+function groupPublicationsByType(publications) {
+    return publications.reduce((groups, publication) => {
+        const type = getPublicationTypeGroup(publication.type);
+
+        if (!groups[type]) {
+            groups[type] = [];
+        }
+
+        groups[type].push(publication);
+        return groups;
+    }, {});
+}
+
+function comparePublications(left, right) {
+    const yearDifference = Number(right.year) - Number(left.year);
+
+    if (yearDifference !== 0) {
+        return yearDifference;
+    }
+
+    const leftTypeIndex = publicationTypeOrder.indexOf(getPublicationTypeGroup(left.type));
+    const rightTypeIndex = publicationTypeOrder.indexOf(getPublicationTypeGroup(right.type));
+
+    if (leftTypeIndex !== rightTypeIndex) {
+        return leftTypeIndex - rightTypeIndex;
+    }
+
+    return getText(left.title).localeCompare(getText(right.title));
+}
+
+function isExternalUrl(value) {
+    return /^https?:\/\//i.test(value);
+}
+
+function getPublicationHref(value) {
+    const href = getText(value);
+
+    if (!href) {
+        return '';
+    }
+
+    if (/^(https?:|mailto:|#|\.?\.?\/)/i.test(href)) {
+        return href;
+    }
+
+    return normaliseExternalUrl(href);
+}
+
+function createPublicationFilterButton(value, label) {
+    const button = document.createElement('button');
+    const isActive = String(selectedPublicationYear) === String(value);
+    button.type = 'button';
+    button.className = 'publication-filter-button';
+    button.textContent = label;
+    button.setAttribute('aria-pressed', String(isActive));
+    button.classList.toggle('active', isActive);
+    button.addEventListener('click', () => {
+        selectedPublicationYear = value;
+        renderPublicationPage();
+    });
+    return button;
+}
+
+function closePublicationMoreDropdowns() {
+    document.querySelectorAll('.publication-more-dropdown.open').forEach((dropdown) => {
+        const button = dropdown.querySelector('.publication-more-button');
+        dropdown.classList.remove('open');
+
+        if (button) {
+            button.setAttribute('aria-expanded', 'false');
+        }
+    });
+}
+
+function createPublicationMoreDropdown(olderYears) {
+    const dropdown = document.createElement('div');
+    const menuId = 'publication-more-years-menu';
+    const isOlderYearActive = olderYears.map(String).includes(String(selectedPublicationYear));
+    dropdown.className = 'publication-more-dropdown';
+    dropdown.classList.toggle('active', isOlderYearActive);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'publication-more-button';
+    button.textContent = 'MORE YEARS';
+    button.setAttribute('aria-haspopup', 'listbox');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', menuId);
+
+    const menu = document.createElement('div');
+    menu.id = menuId;
+    menu.className = 'publication-more-menu';
+    menu.setAttribute('role', 'listbox');
+    menu.setAttribute('aria-label', 'More publication years');
+
+    olderYears.forEach((year) => {
+        const option = document.createElement('button');
+        const isSelected = Number(selectedPublicationYear) === Number(year);
+        option.type = 'button';
+        option.className = 'publication-more-option';
+        option.textContent = String(year);
+        option.setAttribute('role', 'option');
+        option.setAttribute('aria-selected', String(isSelected));
+        option.classList.toggle('active', isSelected);
+        option.addEventListener('click', () => {
+            selectedPublicationYear = Number(year);
+            closePublicationMoreDropdowns();
+            renderPublicationPage();
+        });
+        menu.append(option);
+    });
+
+    button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const shouldOpen = !dropdown.classList.contains('open');
+        closePublicationMoreDropdowns();
+        dropdown.classList.toggle('open', shouldOpen);
+        button.setAttribute('aria-expanded', String(shouldOpen));
+    });
+
+    dropdown.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closePublicationMoreDropdowns();
+            button.focus();
+        }
+    });
+
+    dropdown.append(button, menu);
+    return dropdown;
+}
+
+function renderPublicationYearFilter(years) {
+    const root = document.getElementById('publication-year-filter');
+
+    if (!root) {
+        return;
+    }
+
+    root.replaceChildren();
+
+    if (!years.length) {
+        return;
+    }
+
+    const visibleYears = years.slice(0, 5);
+    const olderYears = years.slice(5);
+
+    visibleYears.forEach((year) => {
+        root.append(createPublicationFilterButton(year, String(year)));
+    });
+
+    if (olderYears.length) {
+        root.append(createPublicationMoreDropdown(olderYears));
+    }
+}
+
+function createPublicationImagePlaceholder(publication) {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'publication-image-placeholder';
+    placeholder.setAttribute('aria-hidden', 'true');
+    placeholder.textContent = getText(publication.type, 'Publication');
+    return placeholder;
+}
+
+function createPublicationMedia(publication) {
+    const media = document.createElement('div');
+    media.className = 'publication-card-media';
+
+    if (publication.image) {
+        const image = document.createElement('img');
+        image.src = publication.image;
+        image.alt = `Thumbnail for ${getText(publication.title, 'publication')}`;
+        image.loading = 'lazy';
+        image.addEventListener('error', () => {
+            media.replaceChildren(createPublicationImagePlaceholder(publication));
+        });
+        media.append(image);
+    } else {
+        media.append(createPublicationImagePlaceholder(publication));
+    }
+
+    return media;
+}
+
+function createPublicationVenueLogo(publication) {
+    if (!publication.venueLogo) {
+        return null;
+    }
+
+    const logo = document.createElement('img');
+    logo.className = 'publication-venue-logo';
+    logo.src = publication.venueLogo;
+    logo.alt = `${getText(publication.venue, publication.type || 'Venue')} logo`;
+    logo.loading = 'lazy';
+    logo.addEventListener('error', () => {
+        logo.remove();
+    });
+
+    return logo;
+}
+
+function createPublicationMeta(publication) {
+    const metaItems = [
+        getText(publication.type, 'Publication'),
+        getText(publication.venue),
+        Number.isFinite(Number(publication.year)) ? String(publication.year) : '',
+    ].filter(Boolean);
+
+    return createTextElement('p', 'publication-card-meta', metaItems.join(' / '));
+}
+
+function createPublicationTags(publication) {
+    if (!Array.isArray(publication.tags) || !publication.tags.length) {
+        return null;
+    }
+
+    const tags = document.createElement('div');
+    tags.className = 'publication-tags';
+
+    publication.tags.forEach((tag) => {
+        const tagText = getText(tag);
+
+        if (tagText) {
+            tags.append(createTextElement('span', 'publication-tag', tagText));
+        }
+    });
+
+    return tags.childElementCount ? tags : null;
+}
+
+function buildPublicationLinks(publication) {
+    const configuredLinks = Array.isArray(publication.links) ? publication.links : [];
+    const findLinkByLabel = (label) => configuredLinks.find((link) => getText(link.label).toLowerCase() === label);
+    const paperUrl = publication.url || findLinkByLabel('paper')?.url;
+    const codeUrl = findLinkByLabel('code')?.url;
+
+    return [
+        {
+            label: 'Paper',
+            url: paperUrl,
+        },
+        {
+            label: 'Code',
+            url: codeUrl,
+        },
+    ]
+        .map((link) => {
+            const href = getPublicationHref(link.url);
+            const label = getText(link.label, 'Link');
+
+            if (!href) {
+                return null;
+            }
+
+            return { href, label };
+        })
+        .filter(Boolean);
+}
+
+function createPublicationLinks(publication) {
+    const links = buildPublicationLinks(publication);
+
+    if (!links.length) {
+        return null;
+    }
+
+    const linkList = document.createElement('div');
+    linkList.className = 'publication-card-links';
+    linkList.setAttribute('aria-label', `Links for ${getText(publication.title, 'publication')}`);
+
+    links.forEach((publicationLink) => {
+        const link = document.createElement('a');
+        link.className = 'publication-card-link';
+        link.href = publicationLink.href;
+        link.textContent = publicationLink.label;
+
+        if (isExternalUrl(publicationLink.href)) {
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+        }
+
+        linkList.append(link);
+    });
+
+    return linkList;
+}
+
+function createPublicationCard(publication) {
+    const card = document.createElement('article');
+    card.className = 'publication-card';
+
+    const body = document.createElement('div');
+    body.className = 'publication-card-body';
+
+    const header = document.createElement('div');
+    header.className = 'publication-card-header';
+
+    const venueLogo = createPublicationVenueLogo(publication);
+
+    if (venueLogo) {
+        header.append(venueLogo);
+    }
+
+    const title = createTextElement('h4', 'publication-card-title', getText(publication.title, 'Publication title'));
+    const authors = createTextElement('p', 'publication-card-authors', getText(publication.authors, 'Authors to be added'));
+    const award = getText(publication.award);
+    const tags = createPublicationTags(publication);
+    const links = createPublicationLinks(publication);
+
+    header.append(createPublicationMeta(publication));
+    body.append(header, title, authors);
+
+    if (award) {
+        body.append(createTextElement('span', 'publication-award', award));
+    }
+
+    if (tags) {
+        body.append(tags);
+    }
+
+    if (links) {
+        body.append(links);
+    }
+
+    card.append(createPublicationMedia(publication), body);
+    return card;
+}
+
+function createPublicationTypeSection(type, publications) {
+    const section = document.createElement('section');
+    section.className = 'publication-type-section';
+    section.append(createTextElement('h4', 'publication-type-title', getPublicationTypeHeading(type)));
+
+    const list = document.createElement('div');
+    list.className = 'publication-card-list';
+    publications.forEach((publication) => list.append(createPublicationCard(publication)));
+    section.append(list);
+
+    return section;
+}
+
+function createPublicationYearSection(year, publications) {
+    const section = document.createElement('section');
+    const titleId = `publications-${year}-title`;
+    section.className = 'publication-year-section';
+    section.setAttribute('aria-labelledby', titleId);
+
+    const header = document.createElement('div');
+    header.className = 'publication-year-header';
+
+    const title = createTextElement('h3', 'publication-year-title', String(year));
+    title.id = titleId;
+
+    const count = createTextElement(
+        'span',
+        'publication-year-count',
+        `${publications.length} ${publications.length === 1 ? 'publication' : 'publications'}`
+    );
+
+    header.append(title, count);
+    section.append(header);
+
+    const typeGroups = groupPublicationsByType(publications.sort(comparePublications));
+    publicationTypeOrder
+        .filter((type) => Array.isArray(typeGroups[type]) && typeGroups[type].length)
+        .forEach((type) => {
+            section.append(createPublicationTypeSection(type, typeGroups[type]));
+        });
+
+    return section;
+}
+
+function createPublicationEmptyState() {
+    const emptyState = document.createElement('div');
+    emptyState.className = 'publication-empty-state';
+    emptyState.append(
+        createTextElement('p', 'publication-empty-title', 'Publications will be added soon.'),
+        createTextElement('p', 'publication-empty-copy', 'This section is ready for future publication records.')
+    );
+    return emptyState;
+}
+
+function renderPublicationList(publications) {
+    const root = document.getElementById('publication-list');
+
+    if (!root) {
+        return;
+    }
+
+    root.replaceChildren();
+
+    if (!publications.length) {
+        root.append(createPublicationEmptyState());
+        return;
+    }
+
+    const publicationsByYear = groupPublicationsByYear(publications.sort(comparePublications));
+    Object.keys(publicationsByYear)
+        .map(Number)
+        .sort((left, right) => right - left)
+        .forEach((year) => {
+            root.append(createPublicationYearSection(year, publicationsByYear[year]));
+        });
+}
+
+function renderPublicationPage() {
+    const publications = getPublications().slice().sort(comparePublications);
+    const years = getPublicationYears(publications);
+
+    if (!years.length) {
+        selectedPublicationYear = null;
+        renderPublicationYearFilter(years);
+        renderPublicationList([]);
+        return;
+    }
+
+    if (!years.includes(Number(selectedPublicationYear))) {
+        selectedPublicationYear = years[0];
+    }
+
+    renderPublicationYearFilter(years);
+    renderPublicationList(publications.filter((publication) => Number(publication.year) === Number(selectedPublicationYear)));
 }
 
 function createAvatarPlaceholder(member) {
@@ -386,6 +859,7 @@ document.querySelectorAll('[data-page]').forEach((link) => {
 });
 
 renderMemberSections();
+renderPublicationPage();
 
 const memberDialog = document.getElementById('member-dialog');
 const memberDialogClose = document.querySelector('.dialog-close');
@@ -409,6 +883,12 @@ if (memberDialog) {
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && memberDialog?.open && typeof memberDialog.close !== 'function') {
         closeMemberDialog();
+    }
+});
+
+document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element) || !event.target.closest('.publication-more-dropdown')) {
+        closePublicationMoreDropdowns();
     }
 });
 

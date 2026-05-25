@@ -618,6 +618,335 @@ main {
     margin-top: 6px;
 }
 
+.publications-intro {
+    max-width: none;
+    width: 100%;
+    margin: -8px 0 22px;
+    color: var(--muted);
+    font-size: 1.02rem;
+}
+
+.publication-year-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 28px;
+}
+
+.publication-filter-button,
+.publication-more-button {
+    min-height: 38px;
+    border: 1px solid #b9d7ea;
+    border-radius: 999px;
+    background: #f2f8fc;
+    color: var(--primary);
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 800;
+}
+
+.publication-filter-button,
+.publication-more-button {
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.publication-more-dropdown {
+    position: relative;
+    margin-left: auto;
+}
+
+.publication-more-button {
+    min-width: 150px;
+    text-align: center;
+}
+
+.publication-filter-button:hover,
+.publication-filter-button:focus,
+.publication-filter-button.active,
+.publication-more-button:hover,
+.publication-more-button:focus,
+.publication-more-dropdown.active .publication-more-button,
+.publication-more-dropdown.open .publication-more-button {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #ffffff;
+}
+
+.publication-filter-button:focus-visible,
+.publication-more-button:focus-visible,
+.publication-more-option:focus-visible,
+.publication-card-link:focus-visible {
+    outline: 3px solid rgba(15, 111, 189, 0.25);
+    outline-offset: 2px;
+}
+
+.publication-more-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 5;
+    display: none;
+    min-width: 100%;
+    padding: 6px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 16px 35px rgba(19, 35, 51, 0.14);
+}
+
+.publication-more-dropdown.open .publication-more-menu {
+    display: grid;
+    gap: 4px;
+}
+
+.publication-more-option {
+    width: 100%;
+    min-height: 36px;
+    padding: 7px 14px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #111111;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+.publication-more-option:hover,
+.publication-more-option:focus,
+.publication-more-option.active {
+    border-color: #b9d7ea;
+    background: #ffffff;
+    color: #111111;
+}
+
+.publication-list {
+    display: grid;
+    gap: 28px;
+}
+
+.publication-year-section {
+    padding: 30px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: 0 16px 35px rgba(19, 35, 51, 0.07);
+}
+
+.publication-year-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+.publication-year-title {
+    margin: 0;
+    color: var(--primary);
+    font-size: 1.28rem;
+    line-height: 1.25;
+}
+
+.publication-year-count {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.publication-type-section + .publication-type-section {
+    margin-top: 26px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+
+.publication-type-title {
+    margin: 0 0 14px;
+    color: var(--primary);
+    font-size: 1.05rem;
+}
+
+.publication-card-list {
+    display: grid;
+    gap: 16px;
+}
+
+.publication-card {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr);
+    gap: 20px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: 0 10px 24px rgba(19, 35, 51, 0.06);
+}
+
+.publication-card-media {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    min-height: 138px;
+    border: 1px solid #b9d7ea;
+    border-radius: 8px;
+    background:
+        linear-gradient(135deg, rgba(15, 111, 189, 0.1), rgba(26, 138, 132, 0.1)),
+        #f7fafc;
+}
+
+.publication-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 18px;
+}
+
+.publication-image-placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 18px;
+    color: var(--primary);
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.3;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.publication-card-body {
+    min-width: 0;
+}
+
+.publication-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.publication-venue-logo {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.publication-card-meta {
+    margin: 0;
+    color: var(--highlight);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    overflow-wrap: anywhere;
+    text-transform: uppercase;
+}
+
+.publication-card-title {
+    margin: 0 0 7px;
+    color: var(--primary);
+    font-size: 1.08rem;
+    line-height: 1.35;
+}
+
+.publication-card-authors {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.96rem;
+}
+
+.publication-award {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    min-height: 28px;
+    margin-top: 12px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #f4fbf9;
+    color: var(--highlight);
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.publication-tags,
+.publication-card-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.publication-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: #f7fafc;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.publication-card-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.publication-card-link:hover,
+.publication-card-link:focus {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.publication-empty-state {
+    display: grid;
+    place-items: center;
+    min-height: 170px;
+    padding: 24px;
+    border: 1px dashed #b7c6d5;
+    border-radius: 8px;
+    background: #f7fafc;
+    text-align: center;
+}
+
+.publication-empty-title {
+    margin: 0 0 4px;
+    color: var(--primary);
+    font-weight: 800;
+}
+
+.publication-empty-copy {
+    margin: 0;
+    color: var(--muted);
+}
+
 .content-list {
     padding-left: 22px;
 }
@@ -724,8 +1053,25 @@ main {
         font-size: 0.98rem;
     }
 
+    .publications-intro {
+        font-size: 0.98rem;
+    }
+
     .member-section {
         padding: 24px;
+    }
+
+    .publication-year-section {
+        padding: 24px;
+    }
+
+    .publication-card {
+        grid-template-columns: 140px minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .publication-card-media {
+        min-height: 130px;
     }
 
     .member-grid {
@@ -781,6 +1127,41 @@ main {
     .member-section-header {
         align-items: flex-start;
         flex-direction: column;
+    }
+
+    .publication-year-filter {
+        align-items: stretch;
+    }
+
+    .publication-filter-button,
+    .publication-more-dropdown {
+        flex: 1 1 auto;
+    }
+
+    .publication-more-dropdown {
+        margin-left: 0;
+    }
+
+    .publication-more-button {
+        width: 100%;
+    }
+
+    .publication-more-menu {
+        right: 0;
+        left: 0;
+    }
+
+    .publication-year-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .publication-card {
+        grid-template-columns: 1fr;
+    }
+
+    .publication-card-media {
+        min-height: 160px;
     }
 
     .member-grid {
