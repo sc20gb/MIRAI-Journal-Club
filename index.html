@@ -16,10 +16,10 @@
 
             <div class="nav-links">
                 <a href="#home" class="nav-link active" data-page="home" aria-current="page">Home</a>
+                <a href="#members" class="nav-link" data-page="members">Members</a>
                 <a href="#events" class="nav-link" data-page="events">Events</a>
                 <a href="#publications" class="nav-link" data-page="publications">Publications</a>
                 <a href="#presentations" class="nav-link" data-page="presentations">Presentations</a>
-                <a href="#members" class="nav-link" data-page="members">Members</a>
             </div>
         </nav>
     </header>
@@ -157,11 +157,13 @@
         </section>
 
         <section id="publications" class="page-section" aria-labelledby="publications-title">
-            <h2 id="publications-title">Recent Publications</h2>
-            <ul class="content-list">
-                <li>"publication 1" - <em>example conference, 2025</em></li>
-                <li>"publication 2" - <em>example conference, 2026</em></li>
-            </ul>
+            <h2 id="publications-title">Publications</h2>
+            <p class="publications-intro">
+                Selected MIRAI Lab publications across medical imaging, surgical vision,
+                generative AI, and healthcare intelligence.
+            </p>
+            <div id="publication-year-filter" class="publication-year-filter" aria-label="Filter publications by year"></div>
+            <div id="publication-list" class="publication-list" aria-live="polite"></div>
         </section>
 
         <section id="presentations" class="page-section" aria-labelledby="presentations-title">
@@ -210,6 +212,7 @@
     </footer>
 
     <script src="./js/memberData.js"></script>
+    <script src="./js/publicationData.js"></script>
     <script src="./js/main.js"></script>
 </body>
 </html>
